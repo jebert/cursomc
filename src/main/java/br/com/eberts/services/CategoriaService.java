@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.eberts.domain.Categoria;
 import br.com.eberts.repositories.CategoriaRepository;
+import br.com.eberts.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoriaService {
@@ -19,9 +20,9 @@ public class CategoriaService {
 
 	public Categoria findById (Integer id) {
 		Optional<Categoria> cat = categoriaRepository.findById(id);
-		return cat.orElse(null);
+		return cat.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado com id: " + id + ", do tipo: " + Categoria.class.getName()));
 	}
-
+	
 	public List<Categoria> findAll() {
 		
 		return categoriaRepository.findAll();
