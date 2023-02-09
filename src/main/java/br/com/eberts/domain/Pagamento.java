@@ -5,15 +5,12 @@ import java.util.Objects;
 
 import br.com.eberts.domain.enums.EstadoPagamento;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -36,7 +33,6 @@ public abstract class Pagamento implements Serializable {
 	@JoinColumn(name = "pedidos_id")
 	@MapsId
 	private Pedido pedido;
-
 
 	public Pagamento(Integer id, EstadoPagamento estadoPagamento, Pedido pedido) {
 		super();
