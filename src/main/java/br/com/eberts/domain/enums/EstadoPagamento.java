@@ -1,13 +1,14 @@
 package br.com.eberts.domain.enums;
 
-public enum TipoCliente {
-
-	PESSOAFISICA(1, "Pessoa Física"),
-	PESSOAJURIDICA(2, "Pessoa Jurídica");
-
+public enum EstadoPagamento {
+	
+	PENDENTE(1, "Pendente"),
+	QUITADO(2, "Quitado"),
+	CANCELADO(3, "Cancelado");
+	
 	private Integer cod;
 	private String descricao;
-	TipoCliente(int cod, String descricao) {
+	EstadoPagamento(int cod, String descricao) {
 
 		this.cod = cod;
 		this.descricao = descricao;
@@ -21,11 +22,11 @@ public enum TipoCliente {
 		return descricao;
 	}
 	
-	public static TipoCliente toEnum(Integer cod) {
+	public static EstadoPagamento toEnum(Integer cod) {
 		if (cod == null) {
 			return null;
 		}
-		for (TipoCliente x : TipoCliente.values()) {
+		for (EstadoPagamento x : EstadoPagamento.values()) {
 			if(cod.equals(x.getCod())) {
 				return x;
 			}
@@ -33,5 +34,5 @@ public enum TipoCliente {
 		
 		throw new IllegalArgumentException("Id inválido : "+ cod);
 	}
-	
+
 }
