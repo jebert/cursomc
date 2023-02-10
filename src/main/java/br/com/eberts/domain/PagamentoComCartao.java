@@ -1,7 +1,6 @@
 package br.com.eberts.domain;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import br.com.eberts.domain.enums.EstadoPagamento;
 import jakarta.persistence.Entity;

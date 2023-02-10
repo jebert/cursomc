@@ -22,6 +22,7 @@ public class PagamentoComBoleto extends Pagamento implements Serializable {
 	
 	@JsonFormat(pattern = "dd/MM/yyy")
 	private Date dataPagamento;
+	
 	public PagamentoComBoleto(Integer id, EstadoPagamento estado, Pedido pedido, Date dataVencimento, Date dataPagamento) {
 		super(id, estado, pedido);
 		this.dataVencimento = dataVencimento;
