@@ -28,8 +28,13 @@ public class CategoriaService {
 		return categoriaRepository.findAll();
 	}
 
-	public Categoria salvar(Categoria cat) {
+	public Categoria save(Categoria cat) {
 		cat.setId(null);
+		return categoriaRepository.save(cat);
+	}
+
+	public Categoria update(Categoria cat) {
+		findById(cat.getId());
 		return categoriaRepository.save(cat);
 	}
 	
