@@ -3,10 +3,12 @@ package br.com.eberts.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import br.com.eberts.domain.Categoria;
 import br.com.eberts.repositories.CategoriaRepository;
+import br.com.eberts.services.exceptions.DataIntegrityException;
 import br.com.eberts.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -36,6 +38,15 @@ public class CategoriaService {
 	public Categoria update(Categoria cat) {
 		findById(cat.getId());
 		return categoriaRepository.save(cat);
+	}
+
+	public void DeleteById(Integer id) {
+		findById(id);
+		try {
+			categoriaRepository.deleteById(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possível excluir uma categoria que possui produtos.");
+		}
 	}
 	
 	

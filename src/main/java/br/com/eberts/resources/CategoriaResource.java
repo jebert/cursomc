@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +27,7 @@ public class CategoriaResource {
 		this.categoriaService = categoriaService;
 	}
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<?> findOne(@PathVariable Integer id) {
+	public ResponseEntity<Categoria> findOne(@PathVariable Integer id) {
 		
 		Categoria cat = categoriaService.findById(id);
 		return ResponseEntity.ok(cat);
@@ -40,17 +41,24 @@ public class CategoriaResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> save (@RequestBody Categoria cat){
+	public ResponseEntity<Void> save (@RequestBody Categoria cat){
 		cat = categoriaService.save(cat);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(cat.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<?> update(@RequestBody Categoria cat,@PathVariable Integer id) {
+	public ResponseEntity<Void> update(@RequestBody Categoria cat,@PathVariable Integer id) {
 		cat.setId(id);
 		cat = categoriaService.update(cat);
 		return ResponseEntity.noContent().build();
-		
 	}
+	
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<Categoria> delete(@PathVariable Integer id) {
+		
+		categoriaService.DeleteById(id);
+		return ResponseEntity.noContent().build();
+	}
+	
 }
