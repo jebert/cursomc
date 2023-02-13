@@ -1,8 +1,12 @@
 package br.com.eberts.resources;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.eberts.domain.Categoria;
+import br.com.eberts.dto.CategoriaDTO;
 import br.com.eberts.services.CategoriaService;
 
 @RestController
@@ -34,9 +39,11 @@ public class CategoriaResource {
 	}
 	
 	@GetMapping
-	public List<Categoria> findAll() {
+	public ResponseEntity<List<CategoriaDTO>> findAll() {
 		
-		return categoriaService.findAll();
+		List<Categoria> lista =  categoriaService.findAll();
+		List<CategoriaDTO> listaDTO = lista.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok(listaDTO);
 
 	}
 	
