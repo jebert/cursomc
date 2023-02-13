@@ -23,6 +23,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import br.com.eberts.domain.Categoria;
 import br.com.eberts.dto.CategoriaDTO;
 import br.com.eberts.services.CategoriaService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(value = "categorias")
@@ -50,14 +51,16 @@ public class CategoriaResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Void> save (@RequestBody Categoria cat){
-		cat = categoriaService.save(cat);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(cat.getId()).toUri();
+	public ResponseEntity<Void> save (@RequestBody @Valid CategoriaDTO catDto){
+		Categoria obj = categoriaService.fromDto(catDto);
+		obj = categoriaService.save(obj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Void> update(@RequestBody Categoria cat,@PathVariable Integer id) {
+	public ResponseEntity<Void> update(@RequestBody @Valid CategoriaDTO catDto,@PathVariable Integer id) {
+		Categoria cat = categoriaService.fromDto(catDto);
 		cat.setId(id);
 		cat = categoriaService.update(cat);
 		return ResponseEntity.noContent().build();
