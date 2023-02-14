@@ -29,11 +29,6 @@ public class CategoriaService {
 		Optional<Categoria> cat = categoriaRepository.findById(id);
 		return cat.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado com id: " + id + ", do tipo: " + Categoria.class.getName()));
 	}
-	
-	public List<Categoria> findAll() {
-		
-		return categoriaRepository.findAll();
-	}
 
 	public Categoria save(Categoria cat) {
 		cat.setId(null);
@@ -52,6 +47,11 @@ public class CategoriaService {
 		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possível excluir uma categoria que possui produtos.");
 		}
+	}
+	
+	public List<Categoria> findAll() {
+		
+		return categoriaRepository.findAll();
 	}
 	
 	public Page<Categoria> findPage (Integer page, Integer linesPerPage, String orderBy, String direction){
