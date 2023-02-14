@@ -7,7 +7,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import br.com.eberts.domain.Categoria;
@@ -36,8 +35,14 @@ public class CategoriaService {
 	}
 
 	public Categoria update(Categoria cat) {
-		findById(cat.getId());
-		return categoriaRepository.save(cat);
+		Categoria newCat= findById(cat.getId());
+		updateData(newCat, cat);
+		return categoriaRepository.save(newCat);
+	}
+
+	private void updateData(Categoria newCat, Categoria cat) {
+
+		newCat.setNome(cat.getNome());   	
 	}
 
 	public void DeleteById(Integer id) {
